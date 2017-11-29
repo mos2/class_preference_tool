@@ -1,0 +1,28 @@
+<form>
+  <p>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Your Name">
+    </mat-form-field>
+  </p>
+  <mat-form-field>
+    <mat-select placeholder="First Choice" [(ngModel)]="firstChoice" (change)="onChangeSelectBox($event)" name="choice_one">
+      <mat-option *ngFor="let choice of choices" [value]="choice.name">
+        {{choice.viewName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Second Choice" [(ngModel)]="secondChoice" (change)="onChangeSelectBox($event)" name="choice_two">
+      <mat-option *ngFor="let choice of choices" [value]="choice.name">
+        {{choice.viewName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Third Choice" [(ngModel)]="thirdChoice" (change)="onChangeSelectBox($event)" name="choice_three">
+      <mat-option *ngFor="let choice of choices" [value]="choice.name">
+        {{choice.viewName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
