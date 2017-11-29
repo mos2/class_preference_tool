@@ -5,23 +5,23 @@
     </mat-form-field>
   </p>
   <mat-form-field>
-    <mat-select placeholder="First Choice" [(ngModel)]="firstChoice" (change)="onChangeSelectBox($event)" name="choice_one">
-      <mat-option *ngFor="let choice of choices" [value]="choice.name">
-        {{choice.viewName}}
+    <mat-select placeholder="First Choice" [(ngModel)]="first_choice.selected_course" (change)="onChangeSelectBox($event)" name="choice_one">
+      <mat-option *ngFor="let choice of first_choice.getOptions()" [value]="choice.name">
+        {{choice.friendly_name}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <mat-select placeholder="Second Choice" [(ngModel)]="secondChoice" (change)="onChangeSelectBox($event)" name="choice_two">
-      <mat-option *ngFor="let choice of choices" [value]="choice.name">
-        {{choice.viewName}}
+    <mat-select placeholder="Second Choice" [(ngModel)]="second_choice.selected_course" (change)="onChangeSelectBox($event)" name="choice_two">
+      <mat-option *ngFor="let choice of second_choice.getOptions()" [value]="choice.name">
+        {{choice.friendly_name}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <mat-select placeholder="Third Choice" [(ngModel)]="thirdChoice" (change)="onChangeSelectBox($event)" name="choice_three">
-      <mat-option *ngFor="let choice of choices" [value]="choice.name">
-        {{choice.viewName}}
+    <mat-select placeholder="Third Choice" [(ngModel)]="third_choice.selected_course" (change)="onChangeSelectBox($event)" name="choice_three">
+      <mat-option *ngFor="let choice of third_choice.getOptions()" [value]="choice.name">
+        {{choice.friendly_name}}
       </mat-option>
     </mat-select>
   </mat-form-field>

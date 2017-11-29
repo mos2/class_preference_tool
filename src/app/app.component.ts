@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CourseChoice } from './course_choice';
+import { COURSES } from './courses';
 
 @Component({
   selector: 'app-root',
@@ -7,31 +9,50 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  selected_options = [];
 
-  choice_one: string;
-  choice_two: string;
-  choice_three: string;
+  first_choice = new CourseChoice(1, null, COURSES.slice());
+  second_choice = new CourseChoice(2, null, COURSES.slice());
+  third_choice = new CourseChoice(3, null, COURSES.slice());
 
-  choices = [
-    {viewName: "Advanced Python", name: "a_python" },
-    {viewName: "Hardware", name: "hardware"},
-    {viewName: "Arduino", name: "arduino"},
-    {viewName: "Computer Science Fundamentals", name: "cs_fundamentals"}
-  ];
+  choices: CourseChoice[] = [this.first_choice, this.second_choice, this.third_choice];
 
-  selected = [];
+  private onChangeSelectBox(event: any) {
+    this.selected_options.push(this.getCourse(event.value));
 
-
-  private onChangeSelectBox(event:any){
-    console.log("Got here")
-    let value = event
-    console.log(event.value)
-    if(this.selected.indexOf(value) == -1){
-      this.selected.push(value);
+    for (let index = 0; index < this.choices.length; index++) {
+      if (event.value !== this.choices[index].selected_course) {
+        this.choices[index].removeCourseOption(event.value);
+      }
+    }
+    for (let selectedIndex = this.selected_options.length - 1; selectedIndex >= 0; selectedIndex--) {
+      let valid = this.isSelectionValid(this.selected_options[selectedIndex].name);
+      if (! valid) {
+        this.selected_options.slice(selectedIndex, 1);
+      }
     }
   }
 
-  private showOption(value:any):boolean{
-    return this.selected.indexOf(value) == -1;
+  private getCourse(name: string) {
+    for (let index = 0; index < COURSES.length; index ++) {
+      if (COURSES[index].name === name) {
+        return COURSES[index];
+      }
+    }
+  }
+
+  private isSelectionValid(name: string) {
+    let valid = false;
+    for (let index = 0; index < this.choices.length; index++) {
+      if (this.choices[index].selected_course === name) {
+        valid = true;
+      }
+    }
+    if (! valid) {
+      for (let index = 0; index < this.choices.length; index++) {
+        this.choices[index].addCourseOption(this.getCourse(name));
+        }
+      }
+    return valid;
   }
 }
