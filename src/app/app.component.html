@@ -1,28 +1,29 @@
 <form>
   <p>
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Your Name">
+      <input matInput placeholder="Your Name" [(ngModel)]="username" name="username_input">
     </mat-form-field>
   </p>
   <mat-form-field>
     <mat-select placeholder="First Choice" [(ngModel)]="first_choice.selected_course" (change)="onChangeSelectBox($event)" name="choice_one">
-      <mat-option *ngFor="let choice of first_choice.getOptions()" [value]="choice.name">
+      <mat-option *ngFor="let choice of courses" [value]="choice.name">
         {{choice.friendly_name}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
     <mat-select placeholder="Second Choice" [(ngModel)]="second_choice.selected_course" (change)="onChangeSelectBox($event)" name="choice_two">
-      <mat-option *ngFor="let choice of second_choice.getOptions()" [value]="choice.name">
+      <mat-option *ngFor="let choice of courses" [value]="choice.name">
         {{choice.friendly_name}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field>
     <mat-select placeholder="Third Choice" [(ngModel)]="third_choice.selected_course" (change)="onChangeSelectBox($event)" name="choice_three">
-      <mat-option *ngFor="let choice of third_choice.getOptions()" [value]="choice.name">
+      <mat-option *ngFor="let choice of courses" [value]="choice.name">
         {{choice.friendly_name}}
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <button mat-raised-button color="primary" (click)="save()">Save my choices!</button>
 </form>

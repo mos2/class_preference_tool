@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CourseChoice } from './course_choice';
 import { COURSES } from './courses';
+import {PreferenceRecord} from './PreferenceRecord';
+import {DatabaseService} from './database.service';
 
 @Component({
   selector: 'app-root',
@@ -10,27 +12,21 @@ import { COURSES } from './courses';
 export class AppComponent {
   title = 'app';
   selected_options = [];
+  courses = COURSES;
+  username = null;
 
-  first_choice = new CourseChoice(1, null, COURSES.slice());
-  second_choice = new CourseChoice(2, null, COURSES.slice());
-  third_choice = new CourseChoice(3, null, COURSES.slice());
+  constructor(private databaseService: DatabaseService) {
+
+  }
+
+  first_choice = new CourseChoice(1, null);
+  second_choice = new CourseChoice(2, null);
+  third_choice = new CourseChoice(3, null);
 
   choices: CourseChoice[] = [this.first_choice, this.second_choice, this.third_choice];
 
   private onChangeSelectBox(event: any) {
     this.selected_options.push(this.getCourse(event.value));
-
-    for (let index = 0; index < this.choices.length; index++) {
-      if (event.value !== this.choices[index].selected_course) {
-        this.choices[index].removeCourseOption(event.value);
-      }
-    }
-    for (let selectedIndex = this.selected_options.length - 1; selectedIndex >= 0; selectedIndex--) {
-      let valid = this.isSelectionValid(this.selected_options[selectedIndex].name);
-      if (! valid) {
-        this.selected_options.slice(selectedIndex, 1);
-      }
-    }
   }
 
   private getCourse(name: string) {
@@ -41,18 +37,14 @@ export class AppComponent {
     }
   }
 
-  private isSelectionValid(name: string) {
-    let valid = false;
-    for (let index = 0; index < this.choices.length; index++) {
-      if (this.choices[index].selected_course === name) {
-        valid = true;
-      }
+  save(): void {
+    const record = new PreferenceRecord(this.username, this.first_choice.selected_course, this.second_choice.selected_course,
+      this.third_choice.selected_course);
+    console.log('Got to save! ' + record);
+    try {
+      this.databaseService.save(record);
+    } catch (error) {
+      console.log('Could not save record', error.message);
     }
-    if (! valid) {
-      for (let index = 0; index < this.choices.length; index++) {
-        this.choices[index].addCourseOption(this.getCourse(name));
-        }
-      }
-    return valid;
   }
 }

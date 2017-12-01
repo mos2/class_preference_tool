@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, MatSelectModule, MatOptionModule} from '@angular/material';
+import {DatabaseService} from './database.service';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import {MatButtonModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, 
     MatSelectModule,
     MatOptionModule
   ],
-  providers: [],
+  providers: [DatabaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
